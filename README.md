@@ -48,9 +48,10 @@ Iteration 4:
 Iteration 5:
   The result of 5 * 1 is 5
   The result of 5 * 2 is 10
-```
+``
 
+## timesN.sh
 
-
+接受一个命令行参数，在shell中为$1变量，$0为程序名
 
 
