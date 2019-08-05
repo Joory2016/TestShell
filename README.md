@@ -31,3 +31,26 @@ break 跳出循环
 
 break n 跳出n层循环
 
+## test continue n
+ the results of the testContinueN.sh
+
+```
+Iteration 1:
+  The result of 1 * 1 is 1
+  The result of 1 * 2 is 2
+Iteration 2:
+  The result of 2 * 1 is 2
+  The result of 2 * 2 is 4
+Iteration 3:
+Iteration 4:
+  The result of 4 * 1 is 4
+  The result of 4 * 2 is 8
+Iteration 5:
+  The result of 5 * 1 is 5
+  The result of 5 * 2 is 10
+```
+
+
+
+
+
