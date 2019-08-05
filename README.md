@@ -25,5 +25,9 @@ IFS=$IFS.OLD
 
 统计某文件夹下文件个数
 
+## test Break
 
+break 跳出循环
+
+break n 跳出n层循环
 
