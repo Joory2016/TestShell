@@ -48,10 +48,46 @@ Iteration 4:
 Iteration 5:
   The result of 5 * 1 is 5
   The result of 5 * 2 is 10
-``
+```
 
 ## timesN.sh
 
 接受一个命令行参数，在shell中为$1变量，$0为程序名
+
+## 测试参数
+
+当脚本使用参数时要判断是否存在数据
+
+```
+if [ -n "$1" ]
+then 
+    echo Hello $1, glad to meet you.
+else
+    echo "Sorry, you did not identify yourself. "
+fi
+```
+## 参数统计
+
+$# 对于命令行输入的参数的个数进行统计
+
+##抓取所有数据
+
+$*  和  $@
+
+$*将命令行上所有参数当做一个单词保存，视为一个整体，而不是多个个体
+$@将命令行上所有参数当作同一字符串的多个独立单词。可用for来遍历
+
+## 移动变量
+
+shift
+
+变量$2的值会移到$1中，变量$1的值会被删除（$0的值，也就是程序名，不会改变）
+
+##处理选项 (CommandOption Folder)
+
+选项是跟在单破折线后面的单个字母，可以改变命令的行为。
+
+
+
 
 
