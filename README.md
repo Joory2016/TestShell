@@ -87,6 +87,124 @@ shift
 
 选项是跟在单破折线后面的单个字母，可以改变命令的行为。
 
+## 合并选项
+
+eg.  ./test.sh -ac
+
+getopt命令
+`set -- $(getopt -q ab:cd "$@")`
+
+-q 忽略非法输入的提示，
+:  表示b选项需要一个参数值
+
+```
+case "$1" in 
+    -b) param="$2"
+        echo "Found the -b option, with parameter value $param"
+        shift ;;
+```
+getopts
+
+```
+while getopts :ab:c opt
+do
+    case "$opt" in
+        a) echo "Found the -a option" ;;
+        b) echo "Found the -b option, with value $OPTARG" ;;
+        c) echo "Found the -c option" ;;
+        *) echo "Unknow option: $opt" ;;
+    esac
+done
+```
+
+getopts命令解析命令行选项时会移除开头的单破折线。
+
+##获得用户输入
+
+```
+echo -n "Enter your name:"
+read name
+echo "Hello $name, welcome to my program."
+```
+
+###  echo -n 不会在末尾输出换行符，允许脚本用户紧跟其后输入数据，而不是下一行。
+让脚本看起来更像表单。
+
+### read -p 选项，允许直接在read命令行指定提示符
+```
+read -p "Please enter your age: " age
+days=$[ $age * 365 ]
+echo "That makes you over $days days old! "
+```
+### read -t 选项，以秒为单位的计时器，计时器过后，返回非零退出状态码。
+```
+if read -t 5 -p "Please enter your name: " name
+then 
+    ...
+```
+
+### read -s选项，以隐藏的方式读取（密码等）
+```
+read -s -p "Enter your password: " pass
+echo 
+echo "Is your password really $pass?"
+```
+
+### 从文件中读取 
+最常见的方法是对文件使用cat命令，将结果通过管道直接
+传给含有read命令的while命令
+```
+count=1
+cat test | while read line
+do
+    echo "Line $count: $line"
+    count=$[ $count +1 ]
+done
+echo "Finished processing the file"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
