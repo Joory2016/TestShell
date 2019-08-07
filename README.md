@@ -161,47 +161,90 @@ do
     count=$[ $count +1 ]
 done
 echo "Finished processing the file"
+```
 
+## 处理信号
 
+系统和应用可以生成超过30个信号
 
+### 生成信号
+-中断进程
+  Ctrl+C生成SIGINT信号，并将其发送给当前在shell中运行的所有进程
+-暂停进程
+  Ctrl+Z组合生成一个SIGTSTP信号，停止shell中运行的任何进程，停止进程与终止进程不同：停止进程会让程序继续保留在内存中，并能从上次停止的位置继续运行
 
+### 捕获信号
+`trap commands signals`
 
+```
+#!/bin/bash
+#Testing signal trapping
+#
+trap "echo 'Sorry! I have trapped Ctrl-C'" SIGINT
+#
+echo This is a test script
+#
+count=1
+while [ $count -le 10 ]
+do 
+    echo "Loop #$count"
+    sleep 2
+    count-$[ $count +1 ]
+done
+echo "This is the end of the test script"
+```
 
+### 捕获脚本退出
 
+在trap命令后加上EXIT信号
+`trap "echo Goodbye..." EXIT`
 
+## 以后台模式运行脚本
 
+只需要在命令后加&符号
+注意，当后台进程运行时，它仍然会使用终端显示器来显示STDOUT和STDERR消息
 
+### 在非控制台下运行脚本
+即使退出终端会话，也让脚本一直以后台模式运行到结束，可以用nohup命令实现
+`nohup ./test1.sh &`
+和普通后台进程一样，shell会给命令分配一个作业号，linux系统会为其分配一个PID号
 
+## 作业控制
+启动、停止、终止以及恢复作业的这些功能统称为作业控制，通过作业控制，就能完全控制shell环境中所有进程的运行方式了。
 
+### 查看作业
+jobs命令允许查看shell当前正在处理的作业
+note：脚本用$$变量来显示Linux系统分配给该脚本的PID
 
+### 重启停止的作业
+bg命令 重启默认作业
+bg 作业号 （如果有多个作业）
 
+## 调整谦让度
 
+调度优先级是内核分配给进程的CPU时间（相对于其他进程）
+Linux系统中，由shell启动的所有进程的调度优先级默认都是相同的。
+调度优先级是个整数值，从-20（最高优先级）到+19（最低优先级）。默认情况下，以优先级0来启动所有进程
 
+### nice命令
+要让命令以更低的优先级运行，只需要用nice -n命令来指定新的优先级级别
+`nice -n 10 ./test4.sh > test4.out &`
+`[1] 4973`
+`ps -p 4973 -o pid,ppid,ni,cmd      #用ps命令验证谦让度（NI列）`
+nore:nice命令阻止普通系统用户来提高命令优先级
 
+### renice命令
+改变系统上已运行命令的优先级。允许你指定运行进程的PID来改变它的优先级。
+只能降低进程的优先级
+```
+$ ./test11.sh &
+[1] 5050
+$
+$renice -n 10 -p 5050
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## 定时运行作业 
+at命令和cron表
 
 
 
